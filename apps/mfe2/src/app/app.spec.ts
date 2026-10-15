@@ -1,18 +1,19 @@
 import { TestBed } from '@angular/core/testing';
-import { App } from './app';
-import { NxWelcome } from './nx-welcome';
+import { provideRouter } from '@angular/router';
+import { RouterTestingHarness } from '@angular/router/testing';
+import { appRoutes } from './app.routes';
 
-describe('App', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [App, NxWelcome],
-    }).compileComponents();
+describe('appRoutes', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideRouter(appRoutes)],
+    });
   });
 
-  it('should render title', async () => {
-    const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Welcome mfe2');
+  it('should render the home page on the root path', async () => {
+    const harness = await RouterTestingHarness.create('/');
+    expect(harness.routeNativeElement?.querySelector('h2')?.textContent).toBe(
+      'Microfrontend 2',
+    );
   });
 });

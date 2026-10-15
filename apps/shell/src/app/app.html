@@ -1,2 +1,13 @@
-<shell-nx-welcome></shell-nx-welcome>
-<router-outlet></router-outlet>
+<nav>
+  <a
+    routerLink="/"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    >Shell</a
+  >
+  <a routerLink="/mfe1" routerLinkActive="active">Microfrontend 1</a>
+  <a routerLink="/mfe2" routerLinkActive="active">Microfrontend 2</a>
+</nav>
+<main>
+  <router-outlet />
+</main>

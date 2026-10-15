@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NxWelcome } from './nx-welcome';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
-  imports: [NxWelcome, RouterModule],
+  imports: [RouterLink, RouterLinkActive, RouterOutlet],
   selector: 'shell-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {
-  protected title = 'shell';
-}
+export class App {}

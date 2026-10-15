@@ -1,0 +1,14 @@
+nav {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+a.active {
+  font-weight: bold;
+}
+
+main {
+  padding: 1rem;
+}

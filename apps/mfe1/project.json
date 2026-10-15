@@ -7,6 +7,56 @@
   "tags": [],
   "targets": {
     "build": {
+      "outputs": ["{workspaceRoot}/dist/apps/mfe1"],
+      "executor": "@angular-architects/native-federation:build",
+      "defaultConfiguration": "production",
+      "options": {
+        "cacheExternalArtifacts": true,
+        "tsConfig": "apps/mfe1/tsconfig.federation.json"
+      },
+      "configurations": {
+        "production": {
+          "target": "mfe1:esbuild:production"
+        },
+        "development": {
+          "target": "mfe1:esbuild:development",
+          "dev": true
+        }
+      }
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular-architects/native-federation:build",
+      "options": {
+        "target": "mfe1:serve-original:development",
+        "tsConfig": "apps/mfe1/tsconfig.federation.json",
+        "rebuildDelay": 500,
+        "cacheExternalArtifacts": true,
+        "dev": true,
+        "devServer": true,
+        "port": 4201
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@angular/build:unit-test",
+      "options": {
+        "watch": false
+      }
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "mfe1:build",
+        "port": 4201,
+        "staticFilePath": "dist/apps/mfe1/browser",
+        "spa": true
+      }
+    },
+    "esbuild": {
       "executor": "@angular/build:application",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
@@ -21,7 +71,8 @@
             "input": "apps/mfe1/public"
           }
         ],
-        "styles": ["apps/mfe1/src/styles.scss"]
+        "styles": ["apps/mfe1/src/styles.scss"],
+        "polyfills": ["es-module-shims"]
       },
       "configurations": {
         "production": {
@@ -46,7 +97,7 @@
         }
       }
     },
-    "serve": {
+    "serve-original": {
       "continuous": true,
       "executor": "@angular/build:dev-server",
       "defaultConfiguration": "development",
@@ -55,30 +106,11 @@
       },
       "configurations": {
         "production": {
-          "buildTarget": "mfe1:build:production"
+          "buildTarget": "mfe1:esbuild:production"
         },
         "development": {
-          "buildTarget": "mfe1:build:development"
+          "buildTarget": "mfe1:esbuild:development"
         }
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint"
-    },
-    "test": {
-      "executor": "@angular/build:unit-test",
-      "options": {
-        "watch": false
-      }
-    },
-    "serve-static": {
-      "continuous": true,
-      "executor": "@nx/web:file-server",
-      "options": {
-        "buildTarget": "mfe1:build",
-        "port": 4201,
-        "staticFilePath": "dist/apps/mfe1/browser",
-        "spa": true
       }
     }
   }
