@@ -37,6 +37,12 @@ jobs:
       # Prepend any command with "nx record --" to record its logs to Nx Cloud
       - run: pnpm exec nx record -- pnpm exec nx format:check --base="remotes/origin/main"
       - run: pnpm exec nx run-many -t lint test build typecheck e2e
+      - run: pnpm federation:check:test
+      - run: >-
+          pnpm federation:check
+          --host dist/apps/shell/browser/remoteEntry.json
+          --remote mfe1=dist/apps/mfe1/browser/remoteEntry.json
+          --remote mfe2=dist/apps/mfe2/browser/remoteEntry.json
       # Nx Cloud recommends fixes for failures to help you get CI green faster. Learn more: https://nx.dev/docs/features/ci-features/self-healing-ci
       - run: pnpm exec nx fix-ci
         if: always()

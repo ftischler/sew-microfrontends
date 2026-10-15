@@ -2,7 +2,10 @@
   "name": "@sew-microfrontends/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "federation:check": "node tools/federation-check/cli.mjs",
+    "federation:check:test": "node --test \"tools/federation-check/*.test.mjs\""
+  },
   "private": true,
   "devDependencies": {
     "@angular-architects/native-federation": "22.2.2",
@@ -30,6 +33,7 @@
     "jsdom": "^27.1.0",
     "nx": "23.3.0",
     "prettier": "^3.8.1",
+    "semver": "^7.8.5",
     "tslib": "^2.3.0",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.58.0",
