@@ -1,4 +1,3 @@
-import { loadRemoteModule } from '@angular-architects/native-federation';
 import {
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
@@ -8,6 +7,7 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
+import { RemoteLoader } from './remote-loader';
 import { RemoteUnavailable } from './remote-unavailable';
 
 interface Mfe3WebComponentModule {
@@ -24,7 +24,7 @@ interface Mfe3WebComponentModule {
         <sew-mfe3 [path]="path()" (mfe3-navigate)="navigate($event)"></sew-mfe3>
       }
       @case ('error') {
-        <shell-remote-unavailable name="mfe3" />
+        <shell-remote-unavailable name="mfe3" (retry)="element.reload()" />
       }
       @default {
         <p>Loading mfe3 ...</p>
@@ -34,6 +34,7 @@ interface Mfe3WebComponentModule {
 })
 export class Mfe3Host {
   private readonly router = inject(Router);
+  private readonly remoteLoader = inject(RemoteLoader);
 
   protected readonly path = toSignal(
     inject(ActivatedRoute).url.pipe(
@@ -44,9 +45,9 @@ export class Mfe3Host {
 
   protected readonly element = resource({
     loader: () =>
-      loadRemoteModule<Mfe3WebComponentModule>('mfe3', './web-component').then(
-        (module) => module.registerMfe3Element(),
-      ),
+      this.remoteLoader
+        .load<Mfe3WebComponentModule>('mfe3', './web-component')
+        .then((module) => module.registerMfe3Element()),
   });
 
   protected navigate(event: Event): void {
