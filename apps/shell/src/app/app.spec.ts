@@ -16,6 +16,6 @@ describe('App', () => {
     const links = Array.from(
       (fixture.nativeElement as HTMLElement).querySelectorAll('nav a'),
     ).map((link) => link.getAttribute('href'));
-    expect(links).toEqual(['/', '/mfe1', '/mfe2']);
+    expect(links).toEqual(['/', '/mfe1', '/mfe2', '/mfe3']);
   });
 });
