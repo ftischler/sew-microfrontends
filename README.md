@@ -9,7 +9,7 @@ Nx monorepo with an Angular shell and two micro frontends, integrated via Native
 | mfe2  | 4202 | Remote |
 
 ```sh
-npm install
-npx nx serve shell
-npx nx run-many -t build lint test
+pnpm install
+pnpm nx serve shell
+pnpm nx run-many -t build lint test
 ```
